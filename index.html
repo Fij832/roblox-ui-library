@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Hub — Premium Roblox UI Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for futuristic glyphs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header navigation -->
+    <header>
+        <div class="brand-section">
+            <i class="fa-solid fa-cube logo-icon"></i>
+            <span class="brand-name">Antigravity Hub</span>
+            <span class="brand-badge">UI Library</span>
+        </div>
+        <div class="header-links">
+            <button class="header-btn" onclick="synth.playMenuNotification()"><i class="fa-solid fa-circle-info"></i> Guide</button>
+            <button class="header-btn primary-btn" onclick="copyLuauScript()"><i class="fa-solid fa-copy"></i> Copy Luau Library</button>
+        </div>
+    </header>
+
+    <!-- Main two-column workspace -->
+    <main class="main-workspace">
+        
+        <!-- Left: Interactive Roblox Engine simulator screen -->
+        <section class="simulator-card">
+            <div class="simulator-header">
+                <div class="sim-indicators">
+                    <span class="sim-dot"></span>
+                    <span class="sim-dot"></span>
+                    <span class="sim-dot"></span>
+                </div>
+                <div class="sim-title">Roblox Viewport Simulator (Drag UI Frame)</div>
+                <div style="width: 40px"></div>
+            </div>
+
+            <div class="roblox-viewport" id="viewport">
+                <!-- 3D mock background -->
+                <div class="roblox-scene">
+                    <div class="scene-grid"></div>
+                    <div class="scene-structure struct-left"></div>
+                    <div class="scene-structure struct-right"></div>
+                </div>
+
+                <div class="roblox-watermark">
+                    <div class="roblox-logo-mock"></div>
+                    <span class="watermark-text">Roblox Studio Client</span>
+                </div>
+
+                <!-- Floating Roblox Glass UI Hub Window -->
+                <div class="roblox-lib-window active-glow" id="roblox-lib-window">
+                    
+                    <!-- Titlebar -->
+                    <div class="window-titlebar" id="window-titlebar">
+                        <div class="titlebar-left">
+                            <i class="fa-solid fa-shield-halved titlebar-icon" id="titlebar-icon"></i>
+                            <span class="titlebar-title" id="gui-title">Antigravity Hub</span>
+                            <span class="titlebar-subtitle">| v1.4.0</span>
+                        </div>
+                        <div class="titlebar-controls">
+                            <button class="title-control-btn"><i class="fa-solid fa-minus"></i></button>
+                            <button class="title-control-btn close" id="gui-close-btn"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="window-main">
+                        <!-- Left Navigation sidebar -->
+                        <div class="window-sidebar">
+                            <button class="sidebar-tab-btn active" data-tab="combat">
+                                <i class="fa-solid fa-crosshairs"></i> Combat
+                            </button>
+                            <button class="sidebar-tab-btn" data-tab="visuals">
+                                <i class="fa-solid fa-eye"></i> Visuals
+                            </button>
+                            <button class="sidebar-tab-btn" data-tab="settings">
+                                <i class="fa-solid fa-sliders"></i> Settings
+                            </button>
+                        </div>
+
+                        <!-- Right Widgets scrollbar area -->
+                        <div class="window-content" id="window-content">
+                            
+                            <!-- TAB: Combat (Default) -->
+                            <div class="tab-view active" id="tab-combat">
+                                
+                                <div class="widget-row" id="row-kill-aura">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Instant Kill Aura</span>
+                                        <span class="widget-desc">Automatically target and attack nearby hostile targets</span>
+                                    </div>
+                                    <button class="widget-btn" id="btn-trigger-aura">
+                                        <i class="fa-solid fa-skull"></i> Strike
+                                    </button>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Super Fly Mode</span>
+                                        <span class="widget-desc">Bypass default physics controls and hover through terrain</span>
+                                    </div>
+                                    <div class="widget-toggle" id="toggle-fly-mode">
+                                        <span class="widget-toggle-dot"></span>
+                                    </div>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Aura Strike Distance</span>
+                                        <span class="widget-desc">Adjust the radial range for aura targeting (studs)</span>
+                                    </div>
+                                    <div class="widget-slider-container">
+                                        <div class="widget-slider-track" id="slider-track-range">
+                                            <div class="widget-slider-fill" id="slider-fill-range" style="width: 30%;"></div>
+                                            <div class="widget-slider-handle" id="slider-handle-range" style="left: calc(30% - 5px);"></div>
+                                        </div>
+                                        <span class="widget-slider-value" id="slider-val-range">15</span>
+                                    </div>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Aura Activation Bind</span>
+                                        <span class="widget-desc">Bind a keyboard trigger to quickly fire strike events</span>
+                                    </div>
+                                    <span class="keybind-widget" id="bind-kill-aura" data-default="X">X</span>
+                                </div>
+                            </div>
+
+                            <!-- TAB: Visuals -->
+                            <div class="tab-view" id="tab-visuals">
+                                
+                                <!-- Folder Section -->
+                                <div class="widget-folder" id="folder-esp">
+                                    <div class="folder-header" id="folder-header-esp">
+                                        <div class="folder-title-wrap">
+                                            <i class="fa-solid fa-folder-open folder-icon"></i>
+                                            <span class="folder-title">ESP Customizer Options</span>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-down folder-arrow"></i>
+                                    </div>
+                                    <div class="folder-content">
+                                        
+                                        <div class="widget-row">
+                                            <div class="widget-label-wrap">
+                                                <span class="widget-title">Name Overlays</span>
+                                                <span class="widget-desc">Draw username tags above target capsules</span>
+                                            </div>
+                                            <div class="widget-toggle" id="toggle-esp-names">
+                                                <span class="widget-toggle-dot"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="widget-row">
+                                            <div class="widget-label-wrap">
+                                                <span class="widget-title">Bounding Boxes</span>
+                                                <span class="widget-desc">Draw animated border outlines around hitboxes</span>
+                                            </div>
+                                            <div class="widget-toggle" id="toggle-esp-boxes">
+                                                <span class="widget-toggle-dot"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="widget-row">
+                                            <div class="widget-label-wrap">
+                                                <span class="widget-title">Bounding Outline Theme</span>
+                                                <span class="widget-desc">Select outline overlay styling patterns</span>
+                                            </div>
+                                            <div class="widget-dropdown-wrap">
+                                                <button class="widget-dropdown-btn" id="dropdown-btn-esp">
+                                                    <span id="dropdown-val-esp">Glitch Laser</span>
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </button>
+                                                <div class="widget-dropdown-list" id="dropdown-list-esp">
+                                                    <span class="dropdown-item active" data-val="laser">Glitch Laser</span>
+                                                    <span class="dropdown-item" data-val="neon">Smooth Neon</span>
+                                                    <span class="dropdown-item" data-val="outline">Minimal Box</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">ESP Visual Highlight Color</span>
+                                        <span class="widget-desc">Select primary accent glow for render bounding boxes</span>
+                                    </div>
+                                    <div class="color-picker-trigger" id="cp-trigger-esp" style="background-color: #06b6d4;">
+                                        <!-- Popup HSL Panel -->
+                                        <div class="color-picker-panel" id="cp-panel-esp">
+                                            <div class="color-canvas" id="cp-canvas-esp"></div>
+                                            <input type="range" min="0" max="360" value="190" class="color-slider" id="cp-slider-esp">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAB: Settings -->
+                            <div class="tab-view" id="tab-settings">
+                                
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Hide Interface Bind</span>
+                                        <span class="widget-desc">Key bound to trigger menu collapse or expansion</span>
+                                    </div>
+                                    <span class="keybind-widget" id="bind-toggle-gui" data-default="RightControl">RightControl</span>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Speed Hack Velocity</span>
+                                        <span class="widget-desc">Alter client speed modifier during horizontal slide</span>
+                                    </div>
+                                    <div class="widget-slider-container">
+                                        <div class="widget-slider-track" id="slider-track-speed">
+                                            <div class="widget-slider-fill" id="slider-fill-speed" style="width: 50%;"></div>
+                                            <div class="widget-slider-handle" id="slider-handle-speed" style="left: calc(50% - 5px);"></div>
+                                        </div>
+                                        <span class="widget-slider-value" id="slider-val-speed">50</span>
+                                    </div>
+                                </div>
+
+                                <div class="widget-row">
+                                    <div class="widget-label-wrap">
+                                        <span class="widget-title">Safely Exit Overlay</span>
+                                        <span class="widget-desc">Unmount and clean all ScreenGuis from Roblox core memory</span>
+                                    </div>
+                                    <button class="widget-btn" id="btn-gui-unload" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #f87171;">
+                                        <i class="fa-solid fa-power-off"></i> Exit Hub
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Right: Config Options & Generated Luau code panel -->
+        <section class="code-generator-card">
+            <div class="code-header-tabs">
+                <div class="code-tabs">
+                    <button class="code-tab-btn active" id="tab-btn-config" onclick="switchRightPanel('config')">
+                        <i class="fa-solid fa-square-sliders"></i> Visual Config
+                    </button>
+                    <button class="code-tab-btn" id="tab-btn-source" onclick="switchRightPanel('source')">
+                        <i class="fa-solid fa-code"></i> Luau Source Code
+                    </button>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">Code Builder</div>
+            </div>
+
+            <!-- Tab Content 1: Dynamic Visual Accent Configurations -->
+            <div class="config-container" id="panel-config">
+                
+                <div>
+                    <h3 class="config-section-title">Theme Preset Modes</h3>
+                    <div class="theme-selector-grid">
+                        <div class="theme-card active" data-theme="default" data-hp="260" data-hs="190">
+                            <span class="theme-preview-dot" style="background: linear-gradient(135deg, #a855f7, #06b6d4);"></span>
+                            <span class="theme-name">Orchid Synth</span>
+                        </div>
+                        <div class="theme-card" data-theme="emerald" data-hp="145" data-hs="45">
+                            <span class="theme-preview-dot" style="background: linear-gradient(135deg, #10b981, #f59e0b);"></span>
+                            <span class="theme-name">Amber Moss</span>
+                        </div>
+                        <div class="theme-card" data-theme="sunset" data-hp="345" data-hs="25">
+                            <span class="theme-preview-dot" style="background: linear-gradient(135deg, #ec4899, #f97316);"></span>
+                            <span class="theme-name">Laser Flare</span>
+                        </div>
+                        <div class="theme-card" data-theme="electric" data-hp="220" data-hs="180">
+                            <span class="theme-preview-dot" style="background: linear-gradient(135deg, #3b82f6, #10b981);"></span>
+                            <span class="theme-name">Cobalt Glitch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="config-section-title">Saved Color Settings & Presets</h3>
+                    <div class="palette-editor">
+                        <span class="widget-desc">Click presets to switch colors. Press + to add current ESP highlight to saved colors.</span>
+                        <div class="palette-swatches" id="palette-swatches">
+                            <span class="palette-swatch active" style="background-color: #06b6d4;" data-color="#06b6d4"></span>
+                            <span class="palette-swatch" style="background-color: #a855f7;" data-color="#a855f7"></span>
+                            <span class="palette-swatch" style="background-color: #10b981;" data-color="#10b981"></span>
+                            <span class="palette-swatch" style="background-color: #f59e0b;" data-color="#f59e0b"></span>
+                            <span class="palette-swatch" style="background-color: #ec4899;" data-color="#ec4899"></span>
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-top: 8px;">
+                            <button class="add-color-btn" id="btn-save-color" title="Add Current Highlight Color"><i class="fa-solid fa-plus"></i></button>
+                            <span style="font-size: 0.7rem; display: flex; align-items: center; color: var(--text-muted);" id="saved-palettes-count">5 custom presets loaded</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="palette-editor">
+                    <h3 class="config-section-title" style="margin-bottom: 4px;">Dynamic Interface Properties</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Frame Title:</span>
+                            <input type="text" id="config-window-title" value="Antigravity Hub" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-light); padding: 4px 8px; border-radius: 4px; color: #fff; font-family: var(--font-sans); font-size: 0.75rem; width: 150px;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Responsive Dragging:</span>
+                            <div class="widget-toggle active-toggle" id="toggle-responsive-drag">
+                                <span class="widget-toggle-dot" style="transform: translateX(14px);"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tab Content 2: Dynamic Live Luau Script Generator -->
+            <div class="code-panel" id="panel-source">
+                <div class="code-container-scroll">
+                    <pre><code id="luau-code"></code></pre>
+                </div>
+                <button class="copy-code-floating-btn" id="copy-code-btn"><i class="fa-solid fa-clipboard"></i> Copy Luau Code</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-left">
+            <span>Antigravity Roblox UI Core library</span>
+            <span>&bull;</span>
+            <span style="color: var(--color-secondary);"><i class="fa-solid fa-code-merge"></i> Ready for Local Injection</span>
+        </div>
+        <div class="footer-right">
+            <a href="#" class="footer-link">Documentation</a>
+            <a href="#" class="footer-link">Github Repository</a>
+        </div>
+    </footer>
+
+    <!-- Load JavaScript Components -->
+    <script src="synth.js"></script>
+    <script src="components/keybind.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
