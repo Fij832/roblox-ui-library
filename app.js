@@ -615,6 +615,8 @@ local <span class="keyword">CombatFolder</span> = <span class="keyword">CombatTa
 
 <span class="keyword">CombatFolder</span>:<span class="method">CreateButton</span><span class="bracket">{</span>
     Name = <span class="string">"Instant Kill Aura"</span>,
+    Description = <span class="string">"Automatically target and attack nearby hostile targets"</span>,
+    InteractText = <span class="string">"Strike"</span>,
     Callback = <span class="keyword">function</span>()
         print(<span class="string">"Strike triggered via Kill Aura!"</span>)
     <span class="keyword">end</span>
@@ -622,6 +624,7 @@ local <span class="keyword">CombatFolder</span> = <span class="keyword">CombatTa
 
 <span class="keyword">CombatFolder</span>:<span class="method">CreateToggle</span><span class="bracket">{</span>
     Name = <span class="string">"Super Fly Mode"</span>,
+    Description = <span class="string">"Bypass default physics controls and hover through terrain"</span>,
     Default = ${state.flyMode},
     Callback = <span class="keyword">function</span>(state)
         print(<span class="string">"Fly Mode toggled: "</span>, state)
@@ -630,6 +633,7 @@ local <span class="keyword">CombatFolder</span> = <span class="keyword">CombatTa
 
 <span class="keyword">CombatFolder</span>:<span class="method">CreateSlider</span><span class="bracket">{</span>
     Name = <span class="string">"Aura Strike Distance"</span>,
+    Description = <span class="string">"Adjust the radial range for aura targeting (studs)"</span>,
     Min = 5,
     Max = 50,
     Default = ${state.auraRange},
@@ -640,6 +644,7 @@ local <span class="keyword">CombatFolder</span> = <span class="keyword">CombatTa
 
 <span class="keyword">CombatFolder</span>:<span class="method">CreateKeybind</span><span class="bracket">{</span>
     Name = <span class="string">"Aura Activation Bind"</span>,
+    Description = <span class="string">"Bind a keyboard trigger to quickly fire strike events"</span>,
     Default = Enum.KeyCode.${state.auraKey},
     Callback = <span class="keyword">function</span>()
         print(<span class="string">"Aura custom trigger binding event fired!"</span>)
@@ -651,6 +656,7 @@ local <span class="keyword">EspFolder</span> = <span class="keyword">VisualsTab<
 
 <span class="keyword">EspFolder</span>:<span class="method">CreateToggle</span><span class="bracket">{</span>
     Name = <span class="string">"Name Overlays"</span>,
+    Description = <span class="string">"Draw username tags above target capsules"</span>,
     Default = ${state.espNames},
     Callback = <span class="keyword">function</span>(state)
         print(<span class="string">"Draw Names toggled: "</span>, state)
@@ -659,6 +665,7 @@ local <span class="keyword">EspFolder</span> = <span class="keyword">VisualsTab<
 
 <span class="keyword">EspFolder</span>:<span class="method">CreateToggle</span><span class="bracket">{</span>
     Name = <span class="string">"Bounding Boxes"</span>,
+    Description = <span class="string">"Draw animated border outlines around hitboxes"</span>,
     Default = ${state.espBoxes},
     Callback = <span class="keyword">function</span>(state)
         print(<span class="string">"Draw Boxes toggled: "</span>, state)
@@ -667,6 +674,7 @@ local <span class="keyword">EspFolder</span> = <span class="keyword">VisualsTab<
 
 <span class="keyword">EspFolder</span>:<span class="method">CreateDropdown</span><span class="bracket">{</span>
     Name = <span class="string">"Bounding Outline Theme"</span>,
+    Description = <span class="string">"Choose a gorgeous preset neon outline effect"</span>,
     Options = <span class="bracket">{</span><span class="string">"Glitch Laser"</span>, <span class="string">"Smooth Neon"</span>, <span class="string">"Minimal Box"</span><span class="bracket">}</span>,
     Default = <span class="string">"${state.espTheme === 'laser' ? 'Glitch Laser' : state.espTheme === 'neon' ? 'Smooth Neon' : 'Minimal Box'}"</span>,
     Callback = <span class="keyword">function</span>(selected)
@@ -679,6 +687,7 @@ local <span class="keyword">ConfigFolder</span> = <span class="keyword">Settings
 
 <span class="keyword">ConfigFolder</span>:<span class="method">CreateSlider</span><span class="bracket">{</span>
     Name = <span class="string">"Speed Hack Velocity"</span>,
+    Description = <span class="string">"Walk speed multiplier for speed hack"</span>,
     Min = 16,
     Max = 200,
     Default = ${state.speedVelocity},
@@ -689,6 +698,8 @@ local <span class="keyword">ConfigFolder</span> = <span class="keyword">Settings
 
 <span class="keyword">ConfigFolder</span>:<span class="method">CreateButton</span><span class="bracket">{</span>
     Name = <span class="string">"Safely Exit Overlay"</span>,
+    Description = <span class="string">"Safely close the overlay and restore settings"</span>,
+    InteractText = <span class="string">"Exit"</span>,
     Callback = <span class="keyword">function</span>()
         <span class="keyword">Window</span>:<span class="method">Destroy</span>()
     <span class="keyword">end</span>
