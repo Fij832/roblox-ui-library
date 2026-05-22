@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeStr = `-- [ Lori Roblox GUI Library Code Configuration ]
 -- Paste this script into your Roblox Studio LocalScript or Exploit Executor
 
-local <span class="keyword">LoriLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua"</span>))()
+local <span class="keyword">LoriLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua?nocache="</span> .. tostring(os.time())))()
 
 local <span class="keyword">Window</span> = <span class="keyword">LoriLib</span>:<span class="method">CreateWindow</span><span class="bracket">{</span>
     Name = <span class="string">"${state.title}"</span>,
