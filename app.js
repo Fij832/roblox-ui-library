@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const codeStr = `-- [ Antigravity Hub Roblox GUI Library Code Configuration ]
 -- Paste this script into your Roblox Studio LocalScript or Exploit Executor
 
-local <span class="keyword">AntigravityLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/DeepMind/antigravity/main/AntigravityLib.lua"</span>))()
+local <span class="keyword">AntigravityLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua"</span>))()
 
 local <span class="keyword">Window</span> = <span class="keyword">AntigravityLib</span>:<span class="method">CreateWindow</span><span class="bracket">{</span>
     Name = <span class="string">"${state.title}"</span>,
