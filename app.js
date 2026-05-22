@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Core state management
     const state = {
-        title: "Antigravity Hub",
+        title: "Lori",
         theme: "default",
-        accentHue: 190, // HSL secondary
-        primaryHue: 260, // HSL primary
+        accentHue: 180, // HSL secondary (Ice Cyan)
+        primaryHue: 345, // HSL primary (Cyber Crimson)
         
         // combat tab
         flyMode: false,
@@ -85,14 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Theme values mappings
     const themes = {
-        default: { hp: 260, hs: 190 },
+        default: { hp: 345, hs: 180 },
         emerald: { hp: 145, hs: 45 },
         sunset: { hp: 345, hs: 25 },
         electric: { hp: 220, hs: 180 }
     };
 
     /* ==========================================================================
-       DRAG-AND-DROP SYSTEM (WITH RESPONSIVE SPRING TILT OPTION)
+       DRAG-AND-DROP SYSTEM (WITH UNRESTRICTED PAN DRAG BOUNDARIES)
        ========================================================================== */
     let isDragging = false;
     let dragStartX = 0;
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Apply micro-tilt if responsive dragging is toggled
         if (state.responsiveDrag) {
             elements.windowFrame.style.transition = 'transform 0.1s cubic-bezier(0.25, 0.8, 0.25, 1)';
-            elements.windowFrame.style.transform = 'scale(1.02) rotate(1deg)';
+            elements.windowFrame.style.transform = 'scale(1.01) rotate(0.5deg)';
         }
         
         e.preventDefault();
@@ -137,17 +137,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let newX = winStartX + dx;
         let newY = winStartY + dy;
         
-        // Keep within viewport boundary checks
+        // UNRESTRICTED DRAGGING: Allow sliding almost fully off the screen boundaries!
+        // We only require a tiny 40px square of the titlebar to stay within the viewport bounds.
         const viewport = document.getElementById('viewport');
         const viewWidth = viewport.clientWidth;
         const viewHeight = viewport.clientHeight;
         const winWidth = elements.windowFrame.clientWidth;
         const winHeight = elements.windowFrame.clientHeight;
         
-        if (newX < 0) newX = 0;
+        // Left constraint: let 85% of frame slide off screen
+        if (newX < -winWidth + 60) newX = -winWidth + 60;
+        // Top constraint: keep titlebar visible so it can always be grabbed
         if (newY < 0) newY = 0;
-        if (newX + winWidth > viewWidth) newX = viewWidth - winWidth;
-        if (newY + winHeight > viewHeight) newY = viewHeight - winHeight;
+        // Right constraint: let 85% of frame slide off screen
+        if (newX > viewWidth - 60) newX = viewWidth - 60;
+        // Bottom constraint: let 85% of frame slide off screen
+        if (newY > viewHeight - 40) newY = viewHeight - 40;
         
         elements.windowFrame.style.left = `${newX}px`;
         elements.windowFrame.style.top = `${newY}px`;
@@ -251,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pct > 1) pct = 1;
             
             fill.style.width = `${pct * 100}%`;
-            handle.style.left = `calc(${pct * 100}% - 5px)`;
+            handle.style.left = `calc(${pct * 100}% - 3px)`;
             
             const rawVal = min + (pct * (max - min));
             const roundedVal = Math.round(rawVal);
@@ -295,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set initial
         const initPct = (initial - min) / (max - min);
         fill.style.width = `${initPct * 100}%`;
-        handle.style.left = `calc(${initPct * 100}% - 5px)`;
+        handle.style.left = `calc(${initPct * 100}% - 3px)`;
         valElem.textContent = initial;
     }
 
@@ -381,9 +386,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const canvas = elements.cpCanvasEsp;
         // Check if element has dimensions
         if (canvas.clientWidth === 0) return;
-        
-        // Canvas is simulated via CSS background gradients to be light,
-        // let's just make the Canvas element responsive to canvas mouse actions!
     }
 
     // Canvas click selection
@@ -459,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Sync mock elements colors
             const icon = document.getElementById('titlebar-icon');
-            if (icon) icon.style.color = `hsl(${hp}, 100%, 65%)`;
+            if (icon) icon.style.color = `hsl(${hp}, 100%, 60%)`;
             
             synth.playMenuNotification();
             showToast(`Applied Theme: ${card.querySelector('.theme-name').textContent}`, "fa-palette");
@@ -544,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hook Window Title input config
     elements.configWindowTitle.addEventListener('input', (e) => {
-        const val = e.target.value || "Roblox Hub";
+        const val = e.target.value || "Lori";
         elements.guiTitle.textContent = val;
         state.title = val;
         window.updateLuauCode();
@@ -592,12 +594,12 @@ document.addEventListener('DOMContentLoaded', () => {
         state.auraKey = activeAuraKey;
         state.guiKey = activeGuiKey;
 
-        const codeStr = `-- [ Antigravity Hub Roblox GUI Library Code Configuration ]
+        const codeStr = `-- [ Lori Roblox GUI Library Code Configuration ]
 -- Paste this script into your Roblox Studio LocalScript or Exploit Executor
 
-local <span class="keyword">AntigravityLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua"</span>))()
+local <span class="keyword">LoriLib</span> = loadstring(game:HttpGet(<span class="string">"https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua"</span>))()
 
-local <span class="keyword">Window</span> = <span class="keyword">AntigravityLib</span>:<span class="method">CreateWindow</span><span class="bracket">{</span>
+local <span class="keyword">Window</span> = <span class="keyword">LoriLib</span>:<span class="method">CreateWindow</span><span class="bracket">{</span>
     Name = <span class="string">"${state.title}"</span>,
     ThemeAccent = Color3.fromHex(<span class="string">"${state.espColor}"</span>),
     DefaultToggleKey = Enum.KeyCode.${state.guiKey},
@@ -709,7 +711,7 @@ local <span class="keyword">ConfigFolder</span> = <span class="keyword">Settings
     });
 
     window.copyLuauScript = function() {
-        const fullLibText = `-- [ Antigravity Hub Roblox GUI Library - Complete Script ]
+        const fullLibText = `-- [ Lori Roblox GUI Library - Complete Script ]
 -- Visit the dashboard builder online to customize themes and presets!
 `;
         navigator.clipboard.writeText(fullLibText);
@@ -749,7 +751,7 @@ local <span class="keyword">ConfigFolder</span> = <span class="keyword">Settings
     
     // Welcome Notification
     setTimeout(() => {
-        showToast("Antigravity Hub Loaded Successfully", "fa-shield-halved");
+        showToast("Lori Hub Loaded Successfully", "fa-shield-halved");
         synth.playMenuNotification();
     }, 800);
 });

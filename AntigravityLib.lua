@@ -1,12 +1,12 @@
 --[[
-    Antigravity Premium Roblox UI Library
+    Lori Premium Roblox UI Library
     Version: 1.4.0
-    Author: Antigravity Team
-    Aesthetic: Cyber Glassmorphic & Neon Accent theme, featuring responsive dragging, smooth tweening, and sound effects!
+    Author: Lori Team / Antigravity
+    Aesthetic: Razor-Sharp Cybernetic Glassmorphic theme with Unlimited Dragging, Smooth Easing, and Crimson Neon Accents!
     
     Usage:
-    local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/DeepMind/antigravity/main/AntigravityLib.lua"))()
-    local Window = Lib:CreateWindow({ Name = "Antigravity Hub" })
+    local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Fij832/roblox-ui-library/main/AntigravityLib.lua"))()
+    local Window = Lib:CreateWindow({ Name = "Lori" })
 --]]
 
 local Players = game:GetService("Players")
@@ -19,14 +19,14 @@ local Mouse = LocalPlayer:GetMouse()
 
 local AntigravityLib = {}
 AntigravityLib.Theme = {
-    Background = Color3.fromRGB(15, 12, 28),
-    Sidebar = Color3.fromRGB(8, 6, 16),
-    WidgetBackground = Color3.fromRGB(25, 20, 45),
-    AccentPrimary = Color3.fromRGB(147, 51, 234), -- Purple
-    AccentSecondary = Color3.fromRGB(6, 182, 212), -- Cyan/Neon
-    TextMain = Color3.fromRGB(243, 240, 252),
-    TextMuted = Color3.fromRGB(142, 138, 159),
-    Border = Color3.fromRGB(45, 40, 65)
+    Background = Color3.fromRGB(8, 6, 14), -- Darker Obsidian Glass
+    Sidebar = Color3.fromRGB(5, 4, 8),      -- Solid Sidebar
+    WidgetBackground = Color3.fromRGB(20, 16, 32),
+    AccentPrimary = Color3.fromRGB(244, 63, 94),   -- Tech Crimson Accent
+    AccentSecondary = Color3.fromRGB(6, 182, 212), -- Ice Cyan Accent
+    TextMain = Color3.fromRGB(249, 248, 252),
+    TextMuted = Color3.fromRGB(149, 144, 171),
+    Border = Color3.fromRGB(40, 35, 55)
 }
 
 local WindowMetatable = {}
@@ -45,21 +45,22 @@ local function Tween(object, info, properties)
     return tween
 end
 
--- Responsive Dragging Utility
+-- Responsive Dragging Utility (With Unrestricted Screen boundaries!)
 local function MakeDraggable(frame, handle, tiltEnabled)
     local dragging = false
     local dragInput, dragStart, startPos
     
     local function update(input)
         local delta = input.Position - dragStart
+        -- Free dragging - no border clamps, let user move it anywhere!
         local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
         
         Tween(frame, TweenInfo.new(0.08, Enum.EasingStyle.Out, Enum.EasingDirection.Quad), { Position = newPos })
         
         if tiltEnabled then
-            -- Micro-tilt action
-            local tiltAngle = math.clamp(delta.X * 0.05, -3, 3)
-            Tween(frame, TweenInfo.new(0.1, Enum.EasingStyle.Out), { Rotation = tiltAngle })
+            -- Micro-tilt action (cybernetic rotation feeling)
+            local tiltAngle = math.clamp(delta.X * 0.03, -2, 2)
+            Tween(frame, TweenInfo.new(0.15, Enum.EasingStyle.Out), { Rotation = tiltAngle })
         end
     end
     
@@ -92,18 +93,18 @@ local function MakeDraggable(frame, handle, tiltEnabled)
 end
 
 -- ==========================================================================
--- CREATE WINDOW
+-- CREATE WINDOW (RAZOR-SHARP CYBERNETIC STYLE)
 -- ==========================================================================
 function AntigravityLib:CreateWindow(config)
     config = config or {}
-    local name = config.Name or "Antigravity Hub"
-    local accentColor = config.ThemeAccent or AntigravityLib.Theme.AccentSecondary
+    local name = config.Name or "Lori"
+    local accentColor = config.ThemeAccent or AntigravityLib.Theme.AccentPrimary
     local toggleKey = config.DefaultToggleKey or Enum.KeyCode.RightControl
     local tilt = config.ResponsiveTilt ~= nil and config.ResponsiveTilt or true
     
     -- Root ScreenGui
     local ScreenGui = Instance.new("ScreenGui")
-    ScreenGui.Name = "Antigravity_" .. name:gsub("%s+", "")
+    ScreenGui.Name = "Lori_" .. name:gsub("%s+", "")
     ScreenGui.ResetOnSpawn = false
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
@@ -124,14 +125,11 @@ function AntigravityLib:CreateWindow(config)
     MainFrame.BorderSizePixel = 0
     MainFrame.Parent = ScreenGui
     
-    -- Glass Corner Radius
-    local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0, 12)
-    UICorner.Parent = MainFrame
+    -- NOTE: Razor-Sharp Style. No UICorners added, giving clean 90-degree edges!
     
-    -- Glow Outline border
+    -- Sharp Outline Border (Cyber outline)
     local UIStroke = Instance.new("UIStroke")
-    UIStroke.Thickness = 1.2
+    UIStroke.Thickness = 1.0
     UIStroke.Color = AntigravityLib.Theme.Border
     UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     UIStroke.Parent = MainFrame
@@ -139,24 +137,20 @@ function AntigravityLib:CreateWindow(config)
     -- Titlebar
     local TitleBar = Instance.new("Frame")
     TitleBar.Name = "TitleBar"
-    TitleBar.Size = UDim2.new(1, 0, 0, 42)
-    TitleBar.BackgroundColor3 = Color3.fromRGB(12, 10, 22)
-    TitleBar.BackgroundTransparency = 0.55
+    TitleBar.Size = UDim2.new(1, 0, 0, 44)
+    TitleBar.BackgroundColor3 = Color3.fromRGB(5, 4, 8)
+    TitleBar.BackgroundTransparency = 0.4
     TitleBar.BorderSizePixel = 0
     TitleBar.Parent = MainFrame
-    
-    local BarCorner = Instance.new("UICorner")
-    BarCorner.CornerRadius = UDim.new(0, 12)
-    BarCorner.Parent = TitleBar
     
     local TitleLabel = Instance.new("TextLabel")
     TitleLabel.Name = "TitleLabel"
     TitleLabel.Size = UDim2.new(0.6, 0, 1, 0)
     TitleLabel.Position = UDim2.new(0, 16, 0, 0)
     TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Text = name
+    TitleLabel.Text = name:upper()
     TitleLabel.Font = Enum.Font.GothamBold
-    TitleLabel.TextSize = 14
+    TitleLabel.TextSize = 13
     TitleLabel.TextColor3 = AntigravityLib.Theme.TextMain
     TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
     TitleLabel.Parent = TitleBar
@@ -167,8 +161,8 @@ function AntigravityLib:CreateWindow(config)
     TitleSubtitle.Position = UDim2.new(0, TitleLabel.TextBounds.X + 24, 0, 0)
     TitleSubtitle.BackgroundTransparency = 1
     TitleSubtitle.Text = "| v1.4.0"
-    TitleSubtitle.Font = Enum.Font.GothamSemibold
-    TitleSubtitle.TextSize = 11
+    TitleSubtitle.Font = Enum.Font.Code
+    TitleSubtitle.TextSize = 10
     TitleSubtitle.TextColor3 = AntigravityLib.Theme.TextMuted
     TitleSubtitle.TextXAlignment = Enum.TextXAlignment.Left
     TitleSubtitle.Parent = TitleBar
@@ -176,19 +170,15 @@ function AntigravityLib:CreateWindow(config)
     -- Left Nav Sidebar
     local Sidebar = Instance.new("Frame")
     Sidebar.Name = "Sidebar"
-    Sidebar.Size = UDim2.new(0, 145, 1, -42)
-    Sidebar.Position = UDim2.new(0, 0, 0, 42)
+    Sidebar.Size = UDim2.new(0, 140, 1, -44)
+    Sidebar.Position = UDim2.new(0, 0, 0, 44)
     Sidebar.BackgroundColor3 = AntigravityLib.Theme.Sidebar
-    Sidebar.BackgroundTransparency = 0.35
+    Sidebar.BackgroundTransparency = 0.45
     Sidebar.BorderSizePixel = 0
     Sidebar.Parent = MainFrame
     
-    local SideCorner = Instance.new("UICorner")
-    SideCorner.CornerRadius = UDim.new(0, 12)
-    SideCorner.Parent = Sidebar
-    
     local SidebarLayout = Instance.new("UIListLayout")
-    SidebarLayout.Padding = UDim.new(0, 4)
+    SidebarLayout.Padding = UDim.new(0, 2)
     SidebarLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     SidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
     SidebarLayout.Parent = Sidebar
@@ -200,8 +190,8 @@ function AntigravityLib:CreateWindow(config)
     -- Content Frame Panel
     local ContentPanel = Instance.new("Frame")
     ContentPanel.Name = "ContentPanel"
-    ContentPanel.Size = UDim2.new(1, -145, 1, -42)
-    ContentPanel.Position = UDim2.new(0, 145, 0, 42)
+    ContentPanel.Size = UDim2.new(1, -140, 1, -44)
+    ContentPanel.Position = UDim2.new(0, 140, 0, 44)
     ContentPanel.BackgroundTransparency = 1
     ContentPanel.Parent = MainFrame
     
@@ -225,9 +215,9 @@ function AntigravityLib:CreateWindow(config)
             WindowObj.Visible = not WindowObj.Visible
             MainFrame.Visible = WindowObj.Visible
             if WindowObj.Visible then
-                Tween(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Size = UDim2.new(0, 520, 0, 380) })
+                Tween(MainFrame, TweenInfo.new(0.2, Enum.EasingStyle.Out, Enum.EasingDirection.Quad), { Size = UDim2.new(0, 520, 0, 380) })
             else
-                Tween(MainFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Size = UDim2.new(0, 520, 0, 0) })
+                Tween(MainFrame, TweenInfo.new(0.15, Enum.EasingStyle.In), { Size = UDim2.new(0, 520, 0, 0) })
             end
         end
     end)
@@ -245,25 +235,22 @@ function WindowMetatable:CreateTab(tabName)
     -- Create Sidebar tab button
     local TabBtn = Instance.new("TextButton")
     TabBtn.Name = tabName .. "_Btn"
-    TabBtn.Size = UDim2.new(0.9, 0, 0, 32)
+    TabBtn.Size = UDim2.new(1, 0, 0, 34)
     TabBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TabBtn.BackgroundTransparency = 1
-    TabBtn.Text = "  " .. tabName
+    -- Text in Uppercase for tech look
+    TabBtn.Text = "   " .. tabName:upper()
     TabBtn.Font = Enum.Font.GothamBold
-    TabBtn.TextSize = 12
+    TabBtn.TextSize = 11
     TabBtn.TextColor3 = AntigravityLib.Theme.TextMuted
     TabBtn.TextXAlignment = Enum.TextXAlignment.Left
     TabBtn.Parent = WindowObj.Sidebar
     
-    local BtnCorner = Instance.new("UICorner")
-    BtnCorner.CornerRadius = UDim.new(0, 6)
-    BtnCorner.Parent = TabBtn
-    
-    -- Tab indicator glow line
+    -- Sharp Sidebar indicator glow line
     local Indicator = Instance.new("Frame")
     Indicator.Name = "Indicator"
-    Indicator.Size = UDim2.new(0, 3, 0.6, 0)
-    Indicator.Position = UDim2.new(0, 0, 0.2, 0)
+    Indicator.Size = UDim2.new(0, 2, 1, 0)
+    Indicator.Position = UDim2.new(0, 0, 0, 0)
     Indicator.BackgroundColor3 = WindowObj.Accent
     Indicator.BorderSizePixel = 0
     Indicator.Visible = false
@@ -275,7 +262,7 @@ function WindowMetatable:CreateTab(tabName)
     TabScroll.Size = UDim2.new(1, 0, 1, 0)
     TabScroll.BackgroundTransparency = 1
     TabScroll.BorderSizePixel = 0
-    TabScroll.ScrollBarThickness = 4
+    TabScroll.ScrollBarThickness = 2 -- Thinner flat scrollbar
     TabScroll.ScrollBarImageColor3 = AntigravityLib.Theme.TextDim
     TabScroll.Visible = false
     TabScroll.Parent = WindowObj.Content
@@ -312,9 +299,9 @@ function WindowMetatable:CreateTab(tabName)
         Indicator.Visible = true
         TabScroll.Visible = true
         
-        -- Bounce Transition
-        TabScroll.Position = UDim2.new(0, 0, 0, 10)
-        Tween(TabScroll, TweenInfo.new(0.25, Enum.EasingStyle.Out, Enum.EasingDirection.Quad), { Position = UDim2.new(0, 0, 0, 0) })
+        -- Flat Slide Transition
+        TabScroll.Position = UDim2.new(0, 8, 0, 0)
+        Tween(TabScroll, TweenInfo.new(0.2, Enum.EasingStyle.Out, Enum.EasingDirection.Quad), { Position = UDim2.new(0, 0, 0, 0) })
     end
     
     TabBtn.MouseButton1Click:Connect(selectTab)
@@ -334,23 +321,19 @@ end
 function TabMetatable:CreateFolder(folderName)
     local TabObj = self
     
-    -- Folder Base
+    -- Folder Base Frame (Sharp 90-degree block)
     local FolderFrame = Instance.new("Frame")
     FolderFrame.Name = folderName .. "_Folder"
     FolderFrame.Size = UDim2.new(0.92, 0, 0, 36)
-    FolderFrame.BackgroundColor3 = Color3.fromRGB(20, 16, 36)
-    FolderFrame.BackgroundTransparency = 0.6
+    FolderFrame.BackgroundColor3 = Color3.fromRGB(15, 12, 28)
+    FolderFrame.BackgroundTransparency = 0.5
     FolderFrame.BorderSizePixel = 0
     FolderFrame.ClipsDescendants = true
     FolderFrame.Parent = TabObj.Scroll
     
-    local FolderCorner = Instance.new("UICorner")
-    FolderCorner.CornerRadius = UDim.new(0, 8)
-    FolderCorner.Parent = FolderFrame
-    
     local FolderStroke = Instance.new("UIStroke")
-    FolderStroke.Thickness = 1
-    FolderStroke.Color = Color3.fromRGB(45, 40, 65)
+    FolderStroke.Thickness = 1.0
+    FolderStroke.Color = Color3.fromRGB(35, 30, 50)
     FolderStroke.Parent = FolderFrame
     
     -- Header Trigger
@@ -358,7 +341,7 @@ function TabMetatable:CreateFolder(folderName)
     Header.Name = "Header"
     Header.Size = UDim2.new(1, 0, 0, 36)
     Header.BackgroundTransparency = 1
-    Header.Text = "   " .. folderName
+    Header.Text = "   " .. folderName:upper()
     Header.Font = Enum.Font.GothamBold
     Header.TextSize = 11
     Header.TextColor3 = AntigravityLib.Theme.TextMain
@@ -367,10 +350,10 @@ function TabMetatable:CreateFolder(folderName)
     
     local Chevron = Instance.new("ImageLabel")
     Chevron.Name = "Chevron"
-    Chevron.Size = UDim2.new(0, 14, 0, 14)
-    Chevron.Position = UDim2.new(1, -26, 0.5, -7)
+    Chevron.Size = UDim2.new(0, 12, 0, 12)
+    Chevron.Position = UDim2.new(1, -26, 0.5, -6)
     Chevron.BackgroundTransparency = 1
-    Chevron.Image = "rbxassetid://6031094678" -- Chevron down asset ID
+    Chevron.Image = "rbxassetid://6031094678" -- Chevron down
     Chevron.ImageColor3 = AntigravityLib.Theme.TextMuted
     Chevron.Parent = Header
     
@@ -383,7 +366,7 @@ function TabMetatable:CreateFolder(folderName)
     Container.Parent = FolderFrame
     
     local ContainerLayout = Instance.new("UIListLayout")
-    ContainerLayout.Padding = UDim.new(0, 8)
+    ContainerLayout.Padding = UDim.new(0, 6)
     ContainerLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
     ContainerLayout.SortOrder = Enum.SortOrder.LayoutOrder
     ContainerLayout.Parent = Container
@@ -410,16 +393,14 @@ function TabMetatable:CreateFolder(folderName)
         local targetHeight = 36
         local rotation = 0
         if not FolderObj.Collapsed then
-            -- Calculate height needed for expanded widgets
             targetHeight = 36 + ContainerLayout.AbsoluteContentSize.Y + 12
             rotation = 90
         end
         
-        Tween(Chevron, TweenInfo.new(0.25, Enum.EasingStyle.Quad), { Rotation = rotation })
-        local tween = Tween(FolderFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), { Size = UDim2.new(0.92, 0, 0, targetHeight) })
+        Tween(Chevron, TweenInfo.new(0.2, Enum.EasingStyle.Quad), { Rotation = rotation })
+        local tween = Tween(FolderFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quad), { Size = UDim2.new(0.92, 0, 0, targetHeight) })
         
         tween.Completed:Connect(function()
-            -- Canvas height update support
             TabObj.Scroll.CanvasSize = UDim2.new(0, 0, 0, TabObj.Scroll.UIListLayout.AbsoluteContentSize.Y + 30)
         end)
     end
@@ -431,7 +412,7 @@ function TabMetatable:CreateFolder(folderName)
 end
 
 -- ==========================================================================
--- CREATE BUTTON (WIDGET)
+-- CREATE BUTTON (WIDGET / SHARP FLAT DESIGN)
 -- ==========================================================================
 function FolderMetatable:CreateButton(config)
     local FolderObj = self
@@ -442,13 +423,9 @@ function FolderMetatable:CreateButton(config)
     local ButtonRow = Instance.new("Frame")
     ButtonRow.Size = UDim2.new(0.96, 0, 0, 36)
     ButtonRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ButtonRow.BackgroundTransparency = 0.98
+    ButtonRow.BackgroundTransparency = 0.985
     ButtonRow.BorderSizePixel = 0
     ButtonRow.Parent = FolderObj.Container
-    
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 6)
-    Corner.Parent = ButtonRow
     
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.7, 0, 1, 0)
@@ -462,19 +439,16 @@ function FolderMetatable:CreateButton(config)
     Label.Parent = ButtonRow
     
     local ClickBtn = Instance.new("TextButton")
-    ClickBtn.Size = UDim2.new(0, 65, 0, 24)
-    ClickBtn.Position = UDim2.new(1, -75, 0.5, -12)
+    ClickBtn.Size = UDim2.new(0, 65, 0, 22)
+    ClickBtn.Position = UDim2.new(1, -75, 0.5, -11)
     ClickBtn.BackgroundColor3 = FolderObj.Tab.Window.Accent
-    ClickBtn.BackgroundTransparency = 0.8
-    ClickBtn.Text = "Trigger"
+    ClickBtn.BackgroundTransparency = 0.82
+    -- Upper-case label
+    ClickBtn.Text = "TRIGGER"
     ClickBtn.Font = Enum.Font.GothamBold
-    ClickBtn.TextSize = 10
+    ClickBtn.TextSize = 9
     ClickBtn.TextColor3 = FolderObj.Tab.Window.Accent
     ClickBtn.Parent = ButtonRow
-    
-    local BtnCorner = Instance.new("UICorner")
-    BtnCorner.CornerRadius = UDim.new(0, 4)
-    BtnCorner.Parent = ClickBtn
     
     local Stroke = Instance.new("UIStroke")
     Stroke.Thickness = 0.8
@@ -482,17 +456,17 @@ function FolderMetatable:CreateButton(config)
     Stroke.Parent = ClickBtn
     
     ClickBtn.MouseButton1Click:Connect(function()
-        -- Bounce animation on trigger
-        Tween(ClickBtn, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0, 60, 0, 22), Position = UDim2.new(1, -70, 0.5, -11) })
-        task.wait(0.08)
-        Tween(ClickBtn, TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Size = UDim2.new(0, 65, 0, 24), Position = UDim2.new(1, -75, 0.5, -12) })
+        -- Flat reactive feedback
+        Tween(ClickBtn, TweenInfo.new(0.06, Enum.EasingStyle.Quad), { BackgroundTransparency = 0.7 })
+        task.wait(0.06)
+        Tween(ClickBtn, TweenInfo.new(0.1, Enum.EasingStyle.Quad), { BackgroundTransparency = 0.82 })
         
         task.spawn(callback)
     end)
 end
 
 -- ==========================================================================
--- CREATE TOGGLE (WIDGET)
+-- CREATE TOGGLE (WIDGET / SHARP SQUARE TOGGLE)
 -- ==========================================================================
 function FolderMetatable:CreateToggle(config)
     local FolderObj = self
@@ -506,13 +480,9 @@ function FolderMetatable:CreateToggle(config)
     local ToggleRow = Instance.new("Frame")
     ToggleRow.Size = UDim2.new(0.96, 0, 0, 36)
     ToggleRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleRow.BackgroundTransparency = 0.98
+    ToggleRow.BackgroundTransparency = 0.985
     ToggleRow.BorderSizePixel = 0
     ToggleRow.Parent = FolderObj.Container
-    
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 6)
-    Corner.Parent = ToggleRow
     
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.7, 0, 1, 0)
@@ -525,36 +495,30 @@ function FolderMetatable:CreateToggle(config)
     Label.TextXAlignment = Enum.TextXAlignment.Left
     Label.Parent = ToggleRow
     
+    -- Sharp Square Toggle base
     local ToggleBase = Instance.new("TextButton")
-    ToggleBase.Size = UDim2.new(0, 32, 0, 18)
-    ToggleBase.Position = UDim2.new(1, -42, 0.5, -9)
+    ToggleBase.Size = UDim2.new(0, 28, 0, 16)
+    ToggleBase.Position = UDim2.new(1, -38, 0.5, -8)
     ToggleBase.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    ToggleBase.BackgroundTransparency = 0.9
+    ToggleBase.BackgroundTransparency = 0.92
+    ToggleBase.BorderSizePixel = 0
     ToggleBase.Text = ""
     ToggleBase.Parent = ToggleRow
     
-    local BaseCorner = Instance.new("UICorner")
-    BaseCorner.CornerRadius = UDim.new(0, 12)
-    BaseCorner.Parent = ToggleBase
-    
     local Dot = Instance.new("Frame")
-    Dot.Size = UDim2.new(0, 12, 0, 12)
-    Dot.Position = UDim2.new(0, 2, 0.5, -6)
+    Dot.Size = UDim2.new(0, 10, 0, 10)
+    Dot.Position = UDim2.new(0, 3, 0.5, -5)
     Dot.BackgroundColor3 = AntigravityLib.Theme.TextMuted
     Dot.BorderSizePixel = 0
     Dot.Parent = ToggleBase
     
-    local DotCorner = Instance.new("UICorner")
-    DotCorner.CornerRadius = UDim.new(0, 6)
-    DotCorner.Parent = Dot
-    
     local function updateVisuals()
         if active then
-            Tween(ToggleBase, TweenInfo.new(0.2), { BackgroundColor3 = FolderObj.Tab.Window.Accent, BackgroundTransparency = 0.8 })
-            Tween(Dot, TweenInfo.new(0.2), { Position = UDim2.new(0, 18, 0.5, -6), BackgroundColor3 = FolderObj.Tab.Window.Accent })
+            Tween(ToggleBase, TweenInfo.new(0.18), { BackgroundColor3 = FolderObj.Tab.Window.Accent, BackgroundTransparency = 0.85 })
+            Tween(Dot, TweenInfo.new(0.18), { Position = UDim2.new(0, 15, 0.5, -5), BackgroundColor3 = FolderObj.Tab.Window.Accent })
         else
-            Tween(ToggleBase, TweenInfo.new(0.2), { BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9 })
-            Tween(Dot, TweenInfo.new(0.2), { Position = UDim2.new(0, 2, 0.5, -6), BackgroundColor3 = AntigravityLib.Theme.TextMuted })
+            Tween(ToggleBase, TweenInfo.new(0.18), { BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.92 })
+            Tween(Dot, TweenInfo.new(0.18), { Position = UDim2.new(0, 3, 0.5, -5), BackgroundColor3 = AntigravityLib.Theme.TextMuted })
         end
     end
     
@@ -568,7 +532,7 @@ function FolderMetatable:CreateToggle(config)
 end
 
 -- ==========================================================================
--- CREATE SLIDER (WIDGET / TWIST)
+-- CREATE SLIDER (WIDGET / SHARP COMPACT SLIDER)
 -- ==========================================================================
 function FolderMetatable:CreateSlider(config)
     local FolderObj = self
@@ -584,13 +548,9 @@ function FolderMetatable:CreateSlider(config)
     local SliderRow = Instance.new("Frame")
     SliderRow.Size = UDim2.new(0.96, 0, 0, 38)
     SliderRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    SliderRow.BackgroundTransparency = 0.98
+    SliderRow.BackgroundTransparency = 0.985
     SliderRow.BorderSizePixel = 0
     SliderRow.Parent = FolderObj.Container
-    
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 6)
-    Corner.Parent = SliderRow
     
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.5, 0, 1, 0)
@@ -603,18 +563,15 @@ function FolderMetatable:CreateSlider(config)
     Label.TextXAlignment = Enum.TextXAlignment.Left
     Label.Parent = SliderRow
     
-    -- Slider Bar Track
+    -- Slider thin track
     local Track = Instance.new("TextButton")
-    Track.Size = UDim2.new(0, 120, 0, 4)
-    Track.Position = UDim2.new(1, -165, 0.5, -2)
+    Track.Size = UDim2.new(0, 110, 0, 2) -- Thinner
+    Track.Position = UDim2.new(1, -155, 0.5, -1)
     Track.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Track.BackgroundTransparency = 0.92
+    Track.BorderSizePixel = 0
     Track.Text = ""
     Track.Parent = SliderRow
-    
-    local TrackCorner = Instance.new("UICorner")
-    TrackCorner.CornerRadius = UDim.new(0, 2)
-    TrackCorner.Parent = Track
     
     local Fill = Instance.new("Frame")
     Fill.Size = UDim2.new(0, 0, 1, 0)
@@ -622,20 +579,13 @@ function FolderMetatable:CreateSlider(config)
     Fill.BorderSizePixel = 0
     Fill.Parent = Track
     
-    local FillCorner = Instance.new("UICorner")
-    FillCorner.CornerRadius = UDim.new(0, 2)
-    FillCorner.Parent = Fill
-    
+    -- Sharp rectangular block handle
     local Handle = Instance.new("Frame")
-    Handle.Size = UDim2.new(0, 10, 0, 10)
-    Handle.Position = UDim2.new(0, -5, 0.5, -5)
+    Handle.Size = UDim2.new(0, 6, 0, 10)
+    Handle.Position = UDim2.new(0, -3, 0.5, -5)
     Handle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Handle.BorderSizePixel = 0
     Handle.Parent = Track
-    
-    local HandleCorner = Instance.new("UICorner")
-    HandleCorner.CornerRadius = UDim.new(0, 5)
-    HandleCorner.Parent = Handle
     
     local ValueLabel = Instance.new("TextLabel")
     ValueLabel.Size = UDim2.new(0, 30, 1, 0)
@@ -656,12 +606,11 @@ function FolderMetatable:CreateSlider(config)
         currentValue = value
         ValueLabel.Text = tostring(value)
         Fill.Size = UDim2.new(pct, 0, 1, 0)
-        Handle.Position = UDim2.new(pct, -5, 0.5, -5)
+        Handle.Position = UDim2.new(pct, -3, 0.5, -5)
         
         task.spawn(callback, value)
     end
     
-    -- Sliding mouse actions
     local sliding = false
     
     Handle.InputBegan:Connect(function(input)
@@ -685,13 +634,12 @@ function FolderMetatable:CreateSlider(config)
         end
     end)
     
-    -- Initial value setup
     local initialPct = (default - min) / (max - min)
     updateValue(initialPct)
 end
 
 -- ==========================================================================
--- CREATE KEYBIND (WIDGET)
+-- CREATE KEYBIND (WIDGET / SHARP COMPACT BOX)
 -- ==========================================================================
 function FolderMetatable:CreateKeybind(config)
     local FolderObj = self
@@ -706,13 +654,9 @@ function FolderMetatable:CreateKeybind(config)
     local BindRow = Instance.new("Frame")
     BindRow.Size = UDim2.new(0.96, 0, 0, 36)
     BindRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    BindRow.BackgroundTransparency = 0.98
+    BindRow.BackgroundTransparency = 0.985
     BindRow.BorderSizePixel = 0
     BindRow.Parent = FolderObj.Container
-    
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 6)
-    Corner.Parent = BindRow
     
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.7, 0, 1, 0)
@@ -729,20 +673,16 @@ function FolderMetatable:CreateKeybind(config)
     BindBox.Size = UDim2.new(0, 45, 0, 20)
     BindBox.Position = UDim2.new(1, -55, 0.5, -10)
     BindBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    BindBox.BackgroundTransparency = 0.95
+    BindBox.BackgroundTransparency = 0.96
     BindBox.Text = boundKey.Name
     BindBox.Font = Enum.Font.Code
     BindBox.TextSize = 9
     BindBox.TextColor3 = FolderObj.Tab.Window.Accent
     BindBox.Parent = BindRow
     
-    local BoxCorner = Instance.new("UICorner")
-    BoxCorner.CornerRadius = UDim.new(0, 4)
-    BoxCorner.Parent = BindBox
-    
     local Stroke = Instance.new("UIStroke")
     Stroke.Thickness = 0.8
-    Stroke.Color = Color3.fromRGB(45, 40, 65)
+    Stroke.Color = Color3.fromRGB(40, 35, 55)
     Stroke.Parent = BindBox
     
     BindBox.MouseButton1Click:Connect(function()
@@ -761,7 +701,7 @@ function FolderMetatable:CreateKeybind(config)
                 else
                     BindBox.Text = boundKey.Name
                 end
-                Stroke.Color = Color3.fromRGB(45, 40, 65)
+                Stroke.Color = Color3.fromRGB(40, 35, 55)
             end
         else
             if not processed and input.KeyCode == boundKey then
